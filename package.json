@@ -1,0 +1,75 @@
+{
+  "name": "@etherland/erc721",
+  "version": "1.0.0",
+  "description": "non fungible tokens for land representation onchain",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "files": [
+    "build",
+    "contracts",
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "truffle compile && truffle-flattener contracts/Etherland.sol > build/Etherland.sol && truffle-flattener contracts/ProxyRegistry.sol > build/ProxyRegistry.sol",
+    "coverage": "truffle run coverage",
+    "test": "(ganache-cli 2>&1 > /dev/null &) && CI=true truffle test && kill $(ps -ef | grep ganache | grep -v grep | awk '{print $2}')",
+    "lint:js": "eslint \"test/*.js\"",
+    "lint:js-fix": "eslint \"test/*.js\" --fix",
+    "lint": "npm run lint:sol",
+    "lint:sol": "solhint \"contracts/**/*.sol\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Etherland/ERC721.git"
+  },
+  "author": "Etherland",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/Etherland/ERC721/issues"
+  },
+  "homepage": "https://github.com/Etherland/ERC721#README",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.1.0",
+    "dotenv": "^8.2.0",
+    "web3": "^1.2.8"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "node-fetch": "^2.6.0",
+    "eslint": "^7.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-chai-friendly": "^0.6.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-security": "^1.4.0",
+    "eth-gas-reporter": "^0.2.17",
+    "ganache-cli": "^6.9.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.9",
+    "openzeppelin-solidity": "^3.0.1",
+    "prettier": "^2.0.5",
+    "solhint": "^3.0.0",
+    "solidity-coverage": "^0.7.5",
+    "solidity-docgen": "^0.5.3",
+    "truffle": "^5.1.28",
+    "truffle-flattener": "^1.4.4"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "node ./scripts/commit-msg.js $HUSKY_GIT_PARAMS && commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
+  }
+}
